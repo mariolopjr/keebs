@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "BUILDDATE",
+        "keycodes",
+        "keymaps",
+        "keyrecord",
+        "TRNS"
+    ],
+    "cmake.configureOnOpen": false,
+    "C_Cpp.default.compilerPath": "",
+}
