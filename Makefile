@@ -9,25 +9,23 @@ all: $(KEYBOARDS)
 .PHONY: $(KEYBOARDS)
 $(KEYBOARDS):
 	# ensure submodule is initialized
-	git submodule init --recursive
+	git submodule update --init --recursive
 
 	# cleanup old symlinks
-	rm -rf qmk_firmware/keyboards/$(NAME_envoy)/keymaps/$(USER)
+	rm -rf qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
 	# add new symlinks
-	ln -s $(shell pwd)/src/keymaps/envoy qmk_firmware/keyboards/$(NAME_envoy)/keymaps/$(USER)
-
-	# run lint check
-	# cd qmk_firmware; qmk lint -km $(USER) -kb $(NAME_$@)
+	ln -s $(shell pwd)/src/keymaps/envoy qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
 	# run build
-	make BUILD_DIR=$(shell pwd)/build -j1 -C qmk_firmware $(NAME_$@):$(USER)
+	cd qmk_firmware
+	qmk compile -kb mode/$(NAME_envoy) -km $(USER)
 
 	# cleanup old symlinks
-	rm -rf qmk_firmware/keyboards/$(NAME_envoy)/keymaps/$(USER)
+	rm -rf qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
 update:
-	git submodule update --recursive --remote
+	git submodule update --recursive --remote --merge
 
 clean:
 	rm -rf /qmk_firmware/build/
