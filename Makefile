@@ -11,17 +11,16 @@ $(KEYBOARDS):
 	# ensure submodule is initialized
 	git submodule update --init --recursive
 
-	# cleanup old symlinks
+	# cleanup old files
 	rm -rf qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
-	# add new symlinks
-	ln -s $(shell pwd)/src/keymaps/envoy qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
+	# copy files
+	cp -R $(shell pwd)/src/keymaps/envoy qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
 	# run build
-	cd qmk_firmware
-	qmk compile -kb mode/$(NAME_envoy) -km $(USER)
+	cd qmk_firmware; util/docker_build.sh mode/$(NAME_envoy):$(USER)
 
-	# cleanup old symlinks
+	# cleanup old files
 	rm -rf qmk_firmware/keyboards/mode/$(NAME_envoy)/keymaps/$(USER)
 
 update:
@@ -29,5 +28,4 @@ update:
 
 clean:
 	rm -rf /qmk_firmware/build/
-	rm -rf ./build/
 	rm -rf ./qmk_firmware/
