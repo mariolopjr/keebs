@@ -1,0 +1,7 @@
+PATH_add /opt/homebrew/opt/avr-gcc@8/bin
+PATH_add /opt/homebrew/opt/arm-gcc-bin@8/bin
+
+no
+avr-libc
+
+yes
